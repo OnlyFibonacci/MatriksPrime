@@ -1,0 +1,16 @@
+coeff:=input("ATR Multiplier",0,20,1);
+
+AP:=input("Common Period",1,500,14);
+
+momentum:=input("Hesaplama MFI=1 RSI=2",1,2,1);
+
+mom:=if(momentum=1,MFI(AP),RSI(AP));
+
+upT:=L-ATR(AP)*coeff;
+
+downT:=H+ATR(AP)*coeff;
+
+AlphaTrend:=If(mom>=50,If(upT<PREV,PREV,upT),If(downT>PREV,PREV,downT));
+
+AlphaTrend;
+ref(AlphaTrend,-2)
