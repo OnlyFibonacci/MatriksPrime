@@ -1,0 +1,23 @@
+P1 := input("P1",1,100,21);
+P2 := input("P2",1,100,32);
+xPrice := C;
+xvnoise := Abs(xPrice - ref(xPrice,-1));
+
+nfastend := 0.666;
+nslowend := 0.0645;
+nsignal := Abs(xPrice - ref(xPrice,-P1));
+nnoise := Sum(xvnoise,P1);
+nefratio := If(nnoise = 0, 0,nsignal/nnoise);
+nsmooth := Power(nefratio * (nfastend - nslowend)+nslowend,2);
+nAMA := PREV + nsmooth*(xPrice - PREV);
+max := HHV(nAMA,P2);
+min := LLV(nAMA,P2);
+flup:=min + (80*(max-min)/100.0);
+fldn:=min + (20*(max-min)/100.0);
+flmi:=min + (50*(max-min)/100.0);
+
+nAMA;
+flup;
+fldn;
+flmi
+
