@@ -1,0 +1,27 @@
+length:=input("BB Length",5,50,20);
+mult:=input("BB MultFactor",1,10,2);
+lengthKC:=input("KC Length",5,50,20);
+multKC:=input("KC MultFactor",0.5,5,1.5);
+useTrueRange:=input("Use TrueRange(KC)",0,1,1);
+source:=C;
+basis:=MOV(source,length,S);
+dev:=multKC * STDEV(source,length);
+upperBB:=basis+dev;
+lowerBB:=basis-dev;
+ma:=MOV(source,lengthKC,S);
+range:=If(useTrueRange=1,ATR(1),H-L);
+rangema:=MOV(range,lengthKC,S);
+upperKC:=ma+rangema*multKC;
+lowerKC:=ma-rangema*multKC;
+sqzOn:=If(lowerBB>lowerKC AND upperBB<upperKC,1,0);
+sqzOff:=If(lowerBB<lowerKC AND upperBB>upperKC,1,0);
+noSqz:=If(sqzOn=0 AND sqzOff=0,1,0);
+
+x1:=((HHV(H,lengthKC)+LLV(L,lengthKC))/2    +   MOV(C,lengthKC,S))/2;
+
+val:=LINEARREG(source - x1,lengthKC);
+
+val
+
+
+
